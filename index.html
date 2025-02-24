@@ -1,11 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bikewatching</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bikewatching</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="global.css">
+    <!-- Mapbox GL JS CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
 </head>
 <body>
-  <h1>🦽 Bikewatching</h1>
+    <header>
+        <h1>🚲 Bike Watching</h1>
+        <label>
+            <div>
+                <a>Filter by time:</a>
+                <input type="range" id="time-slider" min="-1" max="1440" value="-1">
+            </div>
+            <time id="selected-time"></time>
+            <em id="any-time">(any time)</em>
+        </label>
+    </header>
+    <div id="map">
+        <svg></svg>
+    </div>
+
+    <div class="legend">
+        <div style="--departure-ratio: 1">More departures</div>
+        <div style="--departure-ratio: 0.5">Balanced</div>
+        <div style="--departure-ratio: 0">More arrivals</div>
+    </div>
+
+    <p id="info-text">
+        * The underlying map is about Boston area roads and neighborhoods.<br>
+        * The green lines represent <a href="https://bostonopendata-boston.opendata.arcgis.com/datasets/c00dceffbb454a82b978f089d023829e_0/explore" target="_blank">bike lanes</a>; 
+        the circles represent individual stations of <a href="https://bluebikes.com/" target="_blank">BlueBike</a> (a bicycle sharing program).<br>
+        * The <a href="https://bluebikes.com/system-data" target="_blank">datasetes</a> from BlueBikes includes 260,000 individual rides from March 2024.<br>
+        * Use the slider at the top right to filter the data for traffic at specific times of the day.
+    </p>
+
+    <!-- Mapbox GL JS JavaScript -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+
+    <!-- Load D3.js from CDN -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- <script src="map copy.js"></script> -->
+    <script src="map.js"></script>
+
+    <script>
+        function adjustMargin() {
+            const infoText = document.getElementById('info-text');
+            const windowHeight = window.innerHeight;
+            infoText.style.marginTop = `${windowHeight / 16 + 7}rem`;
+        }
+
+        window.addEventListener('resize', adjustMargin);
+        window.addEventListener('load', adjustMargin);
+    </script>
+
 </body>
 </html>
